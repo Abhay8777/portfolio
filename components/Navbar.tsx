@@ -37,8 +37,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
 
-    return () =>
-      window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -58,7 +57,7 @@ export default function Navbar() {
             Abhay
           </span>
 
-          <span className="ml-2 text-white">
+          <span className="ml-3 text-white">
             Mishra
           </span>
         </Link>
@@ -76,9 +75,11 @@ export default function Navbar() {
           ))}
 
           <a
-            href="/resume/Abhay_Mishra_Resume.pdf"
-            download
-            className="rounded-full bg-gradient-to-r from-fuchsia-600 via-purple-500 to-cyan-500 px-7 py-3 font-semibold text-white shadow-lg hover:scale-105 transition"
+            href="/images/resume/Abhay_Mishra_Resume.pdf"
+            download="Abhay_Mishra_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-gradient-to-r from-fuchsia-600 via-purple-500 to-cyan-500 px-7 py-3 font-semibold text-white shadow-lg transition duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(168,85,247,.5)]"
           >
             Resume
           </a>
@@ -107,6 +108,16 @@ export default function Navbar() {
               {item.name}
             </a>
           ))}
+
+          <a
+            href="/images/resume/Abhay_Mishra_Resume.pdf"
+            download="Abhay_Mishra_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block m-4 rounded-full bg-gradient-to-r from-fuchsia-600 via-purple-500 to-cyan-500 px-6 py-4 text-center font-semibold text-white"
+          >
+            Download Resume
+          </a>
 
         </div>
       )}
