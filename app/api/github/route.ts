@@ -8,9 +8,12 @@ export async function GET() {
       },
     });
 
+    const username = process.env.GITHUB_USERNAME!;
+
     const data: any = await graphqlWithAuth(`
       query {
-        user(login: "${process.env.GITHUB_USERNAME}") {
+        user(login: "${username}") {
+
           followers {
             totalCount
           }
@@ -19,8 +22,26 @@ export async function GET() {
             totalCount
           }
 
-          repositories(ownerAffiliations: OWNER) {
+          repositories(
+            ownerAffiliations: OWNER
+            isFork: false
+          ) {
             totalCount
+          }
+
+          contributionsCollection {
+            contributionCalendar {
+              totalContributions
+
+              weeks {
+                contributionDays {
+                  contributionCount
+                  date
+                  weekday
+                  color
+                }
+              }
+            }
           }
         }
       }
@@ -30,17 +51,25 @@ export async function GET() {
       repos: data.user.repositories.totalCount,
       followers: data.user.followers.totalCount,
       following: data.user.following.totalCount,
+
+      totalContributions:
+        data.user.contributionsCollection
+          .contributionCalendar.totalContributions,
+
+      calendar:
+        data.user.contributionsCollection
+          .contributionCalendar.weeks,
     });
   } catch (error) {
-  console.error("GitHub Error:", error);
+    console.error("GitHub Error:", error);
 
-  return Response.json(
-    {
-      error: String(error),
-    },
-    {
-      status: 500,
-    }
-  );
-}
+    return Response.json(
+      {
+        error: String(error),
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }
